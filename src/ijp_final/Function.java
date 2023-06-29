@@ -16,10 +16,14 @@ public class Function {
 	/**
 	 * Hàm thêm mới dữ liệu vào bảng
 	 */
-	public static String insertEmployee(Scanner sc) {
-		conn = ConnectionUtil.getConnection();
+	public static void insertEmployee(Scanner sc) {
+		Employee emp = inputEmployee();
+		insert(emp);
+		employees.add(emp);
+	}
+
+	public static Employee inputEmployee() {
 		Employee emp = new Employee();
-		// Nhập liệu của người dùng
 		System.out.println("-------Thêm nhân viên----------");
 		emp.id = Input.inputLong("Nhập ID nhân viên");
 		emp.name = Input.inputString("Nhập tên nhân viên");
@@ -27,6 +31,12 @@ public class Function {
 		emp.address = Input.inputString("Nhập địa chỉ nhân viên");
 		emp.salary = Input.inputDouble("Nhập lương nhân viên");
 		emp.sumTimeWork = Input.inputInt("Nhập tổng số giờ làm của nhân viên");
+		return emp;
+	}
+
+	public static String insert(Employee emp) {
+		conn = ConnectionUtil.getConnection();
+
 		String sql = "INSERT INTO EMPLOYEE VALUES (" + generateQuestionMarks(6) + ")";
 
 		// Insert dữ liệu vào sql
@@ -38,12 +48,6 @@ public class Function {
 			prstmt.setString(4, emp.address);
 			prstmt.setDouble(5, emp.salary);
 			prstmt.setInt(6, emp.sumTimeWork);
-
-			int numberRecords = prstmt.executeUpdate();
-			if (numberRecords == 0)
-				return "Insert thất bại";
-			else
-				employees.add(emp);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -239,4 +243,5 @@ public class Function {
 		}
 		return questionMarks.toString();
 	}
+
 }
