@@ -22,7 +22,8 @@ public class Function {
 //		
 //		insert(bankBook);
 //		bankBooks.add(bankBook);
-		inputNgay();
+		
+		getBankBooksByDate(inputNgay());
 	}
 	
 
@@ -49,18 +50,24 @@ public class Function {
 		return bankBook;
 	}
 	
-	public static void inputNgay() {
+	public static Date[] inputNgay() {
 	
 	
 		Date batdau = Input.inputDate("Nhập ngày bắt đầu:");
 		Date ketthuc = Input.inputDate("Nhập ngày kết thúc:");
-		int   comparison = ketthuc.compareTo(ketthuc);	        
-      
+		int   comparison = ketthuc.compareTo(batdau);	       
+
         
-        if(comparison<1) {
+        if(comparison<0) {
             System.out.println("vui lòng nhập ngay bắt đầu nhỏ hơn ngày kết thúc");
         	inputNgay();
         }     
+        
+        Date[] dates = new Date[2];
+        dates[0] = batdau;
+        dates[1] = ketthuc;
+
+        return dates;
 		
 	}
 	
@@ -82,10 +89,10 @@ public class Function {
 //		prstmt.setString(5, bankBook.soDienThoai);	
 //		prstmt.setDate(6, java.sql.Date.valueOf(converToSqlDateString(bankBook.ngayGuiTK)));
 //		prstmt.setDouble(7, bankBook.soTien);
-        return BankBook;
+        return bankBook;
     }
 	
-	public static void getBankBooksBy(Date batdau,Date ketthuc) {
+	public static void getBankBooksByDate(Date[] input) {
 		List<BankBook> emps = new ArrayList<>();
 		conn = ConnectionUtil.getConnection();
 	
@@ -93,14 +100,14 @@ public class Function {
 		try {
 			
 			PreparedStatement prstmt = conn.prepareStatement(sql);
-			prstmt.setDate(1, java.sql.Date.valueOf(converToSqlDateString(batdau)));
-			prstmt.setDate(1, java.sql.Date.valueOf(converToSqlDateString(ketthuc)));
+			prstmt.setDate(1, java.sql.Date.valueOf(converToSqlDateString(input[0])));
+			prstmt.setDate(2, java.sql.Date.valueOf(converToSqlDateString(input[1])));
 			
 			ResultSet rs = prstmt.executeQuery();
 			while (rs.next()) {
 				BankBook bankBook = new BankBook();
 				bankBook = mapResultSetToObject(rs);
-	
+				System.out.println(bankBook.toString());
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
