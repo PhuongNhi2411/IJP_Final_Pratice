@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/Microsoft JDBC DRIVER 12.2 for SQL Server/sqljdbc_12.2/enu/mssql-jdbc-12.2.0.jre11.jar">
+	<classpathentry kind="lib" path="C:/Program Files/Microsoft JDBC Driver 12.2 for SQL Server/sqljdbc_12.2/enu/mssql-jdbc-12.2.0.jre11.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
